@@ -1,0 +1,22 @@
+% Editor / Meta Review
+\editor
+
+\begin{generalcomment}
+	The editor has collected the review comments from two reviewers, and both reviewers recommend major revision. The manuscript should strengthen the data-collection and propulsion models and better clarify the claimed coupling between horizontal and vertical motion. The practical feasibility of the trajectory should also be improved by addressing velocity transitions and the possible impact of wind. In addition, the global optimality claim should be qualified since the proposed DP operates over a discretized state space. Further analysis of discretization sensitivity and computational cost is recommended. The authors should also discuss the assumptions related to mission duration and practical UAV operating constraints. Based on these concerns, the editor recommends major revision for this submission.
+\end{generalcomment}
+
+We sincerely thank the Editor for the careful assessment and for synthesizing the reviewers' concerns. We have revised the manuscript to address every point raised above. A brief summary of how each concern has been resolved is given below; the detailed arguments and the corresponding manuscript changes are provided in our point-by-point responses to the reviewers.
+
+\begin{detail}
+	\item \textbf{Strengthening the data-collection and propulsion models.} We have enriched the data-collection model by expressing the data upload through a constant achievable rate determined by the channel bandwidth and a per-node nominal SINR, and by tying the required collection duration to the data volume (Comment 1.1); the angular unit of the LoS model has also been clarified (Comment 2.1). The propulsion model now states explicitly how the horizontal and vertical velocity components combine into the total speed (Comment 1.2).
+
+	\item \textbf{Clarifying the claimed coupling between horizontal and vertical motion.} We have revised the wording so that the jointness is stated precisely---through the flight pitch angle, which ties the two velocity components together---rather than over-claiming a coupling in the instantaneous power itself, which is additive under the adopted models. Please see our response to Comment 1.2.
+
+	\item \textbf{Practical feasibility of the trajectory (velocity transitions and wind).} We have added a discussion of the acceleration/deceleration cost at segment boundaries (Comments 1.3 and 2.2) and of the effect of wind, \ie the distinction between airspeed and ground speed (Comment 1.4).
+
+	\item \textbf{Qualifying the global-optimality claim.} We have qualified the optimality statements as holding \emph{over the discretized state space} (e.g., in the conclusion). Please see our response to Comment 1.5.
+
+	\item \textbf{Discretization sensitivity and computational cost.} We have added a new sensitivity study that varies the state-sampling resolution and reports the energy convergence, the running time, and the relative optimality gap. Please see our response to Comment 1.5.
+
+	\item \textbf{Assumptions on mission duration and operating constraints.} We have added explicit discussions of the no-global-deadline assumption (Assumption A2), the altitude bounds, and the battery-capacity constraint. Please see our responses to Comments 2.3, 2.4 and 2.5.
+\end{detail}

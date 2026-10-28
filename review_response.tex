@@ -1,0 +1,48 @@
+\documentclass[12pt,american]{article}
+\usepackage[T1]{fontenc}
+\usepackage{fourier}
+\usepackage[hidelinks]{hyperref}
+\usepackage{babel}
+\usepackage[babel]{microtype}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[babel]{csquotes}
+\usepackage[journal={Computer Networks},
+			manuscript={COMNET-D-26-06580},
+			editor={Editor}]{reviewresponse}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage[a4paper,total={160mm,245mm},left=25mm,top=25mm]{geometry}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{.5pt}
+\usepackage[shortlabels]{enumitem}
+\newlist{detail}{itemize}{3}
+\setlist[detail, 1]{label=\textbullet,leftmargin=21pt,nosep}
+\usepackage[backend=biber,style=ieee,dashed=false,url=false,isbn=false,defernumbers=false,refsection=section]{biblatex}
+\newcommand{\ud}{\,\mathrm{d}}
+\newcommand{\ie}{\emph{i.e., }}
+\newcommand{\eg}{\emph{e.g., }}
+\newcommand{\etal}{\emph{et al.}}
+\bibliography{literature.bib}
+
+\title{Joint Horizontal-Vertical Speed Optimization for Energy-Efficient UAV Data Collection}
+\author{Haozhe Zhang, Feng Shan and Ming Yang}
+
+
+\begin{document}
+\maketitle
+
+% Cover Letter
+\input{cover_letter.tex}
+\setcounter{page}{0}
+\pagestyle{fancy}
+\fancyfoot[R]{\thepage\ / \pageref{LastPage}}
+\fancyfoot[L]{Response Letter for COMNET-D-26-06580}
+\fancyfoot[C]{\ }
+\input{Reviewers/Editor.tex}
+\input{Reviewers/R1.tex}
+\input{Reviewers/R2.tex}
+
+\end{document}

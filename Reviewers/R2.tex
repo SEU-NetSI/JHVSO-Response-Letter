@@ -1,0 +1,92 @@
+% Reviewer 2
+\reviewer
+
+% ---- Comment 2.1 ----
+\begin{revcomment}
+	The angular unit used in the LoS probability model should be clarified in Eqs. (1)-(2). The definition $\theta_i=\arctan(h_i/r_i)$ appears potentially inconsistent with the simulation parameter $a=45$ unless the angle is explicitly converted to degrees.
+\end{revcomment}
+
+\begin{revresponse}[]
+	Thank you for this comment. The elevation angle in the LoS probability model is expressed in degrees, which is consistent with the standard probabilistic LoS model~\cite{alhourani2014optimal} and with the simulation setting $a=45$. To remove the ambiguity, we have revised the manuscript to write the angle explicitly in degrees, i.e., $\theta_i=\frac{180}{\pi}\arctan(h_i/r_i)$, and to unify the notation of the environment parameters as $a$ and $b$ throughout Section~3.1.
+
+	The revised text is as follows.
+	\begin{changes}
+		\textbf{Eq.~(1) (revised).} $PL_i(r_i,h_i)=\frac{\mu_{LoS}-\mu_{NLoS}}{1+a \exp(-b[\frac{180}{\pi}\arctan(h_i/r_i)-a])}+10\log(h_i^2+r_i^2)+M$.
+
+		\textbf{Section~3.1 (revised).} The key angular variable is the link elevation angle $\theta_i=\frac{180}{\pi}\arctan(h_i/r_i)$ (in degrees), measured between the GN--UAV line and the horizontal plane. It determines the LoS probability $P_{LoS}(\theta_i)=1/(1+a\exp(-b[\theta_i-a]))$.
+	\end{changes}
+\end{revresponse}
+
+% ---- Comment 2.2 ----
+\begin{revcomment}
+	The propulsion model ignores acceleration and deceleration costs in Theorem 1. The UAV can therefore switch between different segment velocities without any transition time or energy penalty, which may affect the practical validity of the obtained trajectory.
+\end{revcomment}
+
+\begin{revresponse}[]
+	Thank you for this comment. We have clarified this point in the revised manuscript: the constant segment speeds should be interpreted as target cruise speeds, which a physical UAV tracks with short acceleration/deceleration ramps. Moreover, the time and energy consumed during these transition phases account for only a small fraction of the total mission time and energy~\cite{msmo}, so they do not materially affect the planned schedule or the energy-optimal speed selection. We have added a remark in Section~4.1 stating this explicitly, and full acceleration dynamics is left as future work (also noted in the conclusion).
+
+	The revised text is as follows.
+	\begin{changes}
+		\textbf{Section~4.1 (added Remark).} The resulting trajectory is piecewise constant-speed, with task segments flown per Remark 1 and gap segments per Theorem 2, so consecutive segments may change velocity at their shared boundary. In practice, this change is realized by a brief acceleration/deceleration phase whose time and energy are only a small fraction of the total mission~\cite{msmo}; the constant speeds are therefore target cruise speeds tracked with short transition ramps, and full acceleration dynamics are left as future work.
+	\end{changes}
+\end{revresponse}
+
+% ---- Comment 2.3 ----
+\begin{revcomment}
+	In Theorem 3, the non-aftereffect property relies on the strong assumption that there is no global mission deadline. With a practical constraint such as $T \leq T_{\max}$, elapsed time would need to be included in the DP state.
+\end{revcomment}
+
+\begin{revresponse}[]
+	Thank you for this comment. We respond in two parts.
+
+	\textbf{(1) The non-aftereffect property and the essential role of Assumption A2.} The mission is decomposed into per-GN stages, and the cost of each inter-node transition is determined solely by its two endpoint states; Theorem~3 shows that the optimal outbound sub-path from any state $S$ depends only on $S$, not on the inbound path. This non-aftereffect property rests on Assumption A2 (no global mission deadline): without a deadline, the elapsed time does not constrain the feasibility of the outbound path, so the state $S$ alone is a sufficient statistic for all future decisions. The assumption is deliberate---with a global deadline $T\le T_{\max}$, the remaining time budget would depend on the elapsed time, which would then have to enter the DP state and break the low-dimensional Markov structure of Theorem~3. We have added a remark in Section~4.2 stating this explicitly.
+
+	\textbf{(2) Future work with a deadline.} Should a global deadline be imposed, each DP state would need to be augmented with a time dimension, and the overall algorithm would have to be revisited accordingly; we leave this as an important direction for future work.
+
+	The revised text is as follows.
+	\begin{changes}
+		\textbf{Section~4.2 (added Remark).} Assumption A2 can in principle be removed by imposing a global mission deadline $T \le T_{\max}$. This, however, would break the non-aftereffect property of Theorem 3: the feasibility of an outbound path would then depend on the elapsed time, so each DP state would need to be augmented with a time dimension, and the overall algorithm would have to be revisited accordingly. We therefore retain A2 in the present work to keep the state space low-dimensional and the stage-wise recurrence efficient, and we have considered incorporating this deadline constraint in a future article.
+	\end{changes}
+\end{revresponse}
+
+% ---- Comment 2.4 ----
+\begin{revcomment}
+	Practical altitude constraints are not explicitly considered. Constraints such as $h_{\min} \le h(t) \le h_{\max}$, terrain clearance, obstacles, and regulatory altitude limits should be discussed.
+\end{revcomment}
+
+\begin{revresponse}[]
+	Thank you for this comment. We have added explicit altitude bounds to the formulation as follows.
+
+	First, the flight altitude is now bounded by $h_{\min} \le h(t) \le h_{\max}$ in Definition 1. Second, this bound is enforced in a straightforward manner: candidate state points whose altitude violates the bound are simply discarded during state-space construction, so the dynamic program only ever considers altitude-feasible states, and no other change to the algorithm is required. Third, in the simulations the altitude is confined to $[50,150]$ m---the lower bound matches the take-off/landing altitude, while the upper bound is a representative operating ceiling for infrastructure-inspection missions, which permits altitudes above the $120$-m open-category limit when the UAV stays in close proximity to a structure (14 CFR \S 107.51); it also covers the highest altitude ($135$ m) reached in our real-world case study. Terrain-clearance and obstacle constraints, which amount to position-dependent forbidden regions, are not modeled and are left as a direction for future work.
+
+	The revised text is as follows.
+	\begin{changes}
+		\textbf{Definition 1 (revised).} The flight altitude is additionally bounded by $h_{\min} \le h(t) \le h_{\max}$, where $h_{\min}$ and $h_{\max}$ are the lower and upper altitude limits.
+
+		\textbf{Section~4.2 (added).} Candidate state points whose altitude violates $h_{\min} \le h \le h_{\max}$ are simply discarded during state-space construction, so the dynamic program only ever considers altitude-feasible states; no other change to the algorithm is required.
+
+		\textbf{Section~6 (added).} The flight altitude is confined to $[h_{\min}, h_{\max}]=[50,150]$ m: the lower bound matches the take-off/landing altitude, while the upper bound is a representative operating ceiling for infrastructure-inspection missions (e.g., 14 CFR \S 107.51), and it covers the highest altitude ($135$ m) in our real-world case study.
+
+		\textbf{Table~1 (added row).} Altitude bounds $[h_{\min},h_{\max}]$ (m) [50, 150].
+	\end{changes}
+\end{revresponse}
+
+% ---- Comment 2.5 ----
+\begin{revcomment}
+	The formulation does not explicitly consider the UAV battery capacity, e.g., $E_{total}\le E_{battery}$. Moreover, takeoff, initial climb, final descent, and landing energy are excluded from the simulated mission.
+\end{revcomment}
+
+\begin{revresponse}[]
+	Thank you for this comment. We respond to the two points separately.
+
+	\textbf{(1) Battery capacity.} A battery-capacity constraint $E_{total}\le E_{battery}$ is analogous to the global mission deadline discussed in our response to Comment 2.3: if enforced, the accumulated energy would have to be tracked in the DP state, which would break the low-dimensional Markov structure of Theorem 3. We therefore do not impose it in the present formulation and leave it as a direction for future work (noted in the conclusion).
+
+	\textbf{(2) Takeoff, climb, descent, and landing energy.} These energies are fixed one-time costs: since the initial and final altitudes $h_0$ and $h_f$ are exogenous, they are additive constants that do not affect the optimal trajectory. We have stated explicitly in Section~3.3 that they are excluded from $E_{total}$.
+
+	The revised text is as follows.
+	\begin{changes}
+		\textbf{Section~3.3 (added).} The energies consumed during takeoff, the initial climb to $h_0$, the final descent from $h_f$, and landing are fixed one-time costs: since $h_0$ and $h_f$ are exogenous, these costs are additive constants that do not affect the optimal trajectory, and are therefore excluded from $E_{total}$.
+	\end{changes}
+\end{revresponse}
+
+\printpartbibliography{alhourani2014optimal, msmo}
