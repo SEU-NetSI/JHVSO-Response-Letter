@@ -9,29 +9,29 @@
 \begin{revresponse}[]
 	Thank you for this valuable comment. We agree that the previous formulation left the relationship between the prescribed collection duration $\tau_i$ and the underlying data-collection process implicit. We have revised the system model to explicitly incorporate the achievable rate, the bandwidth, the SINR, and the data volume, and to tie the successful-collection condition to these quantities.
 
-	\textbf{(1) Nominal SINR and achievable rate.} In the revised Section~3.1, we characterize each $GN_i$ by a nominal SINR $\gamma_i$, a per-node design parameter given in advance (like the path-loss threshold $PL_i^{max}$), rather than the instantaneous, position-dependent SINR experienced by the UAV. The achievable rate is evaluated at this nominal SINR through the Shannon capacity, $\bar{R}_i=B\log_2(1+\gamma_i)$, where $B$ is the channel bandwidth.
+	\textbf{(1) Nominal SINR and achievable rate.} In the revised Section~3.1, we characterize each $GN_i$ by a nominal SINR $\Gamma_i$, a per-node parameter analogous to the path-loss threshold $PL_i^{max}$; the achievable rate is evaluated at this nominal SINR through the Shannon capacity, $\bar{R}_i=B\log_2(1+\Gamma_i)$, where $B$ is the channel bandwidth.
 
-	\textbf{(2) Constant-rate characterization.} Since $\gamma_i$ is a fixed per-node parameter, the achievable rate $\bar{R}_i$ is constant throughout the collection phase, which keeps the collection duration $\tau_i=D_i/\bar{R}_i$ a fixed per-node quantity.
+	\textbf{(2) Constant-rate characterization.} Since $\Gamma_i$ is fixed, the achievable rate $\bar{R}_i$ is constant throughout the collection phase, so the collection duration $\tau_i=D_i/\bar{R}_i$ remains a fixed per-node quantity; this constant-rate characterization keeps the problem tractable and preserves the fixed-$\tau_i$ structure that enables the stage-wise dynamic-programming optimality analysis.
 
 	\textbf{(3) Successful-collection condition.} Given the data volume $D_i$ of $GN_i$, the required collection duration is now explicitly $\tau_i=D_i/\bar{R}_i$, and the collection of $GN_i$ is defined to be successful if and only if the UAV stays within its communication region for a total duration of at least $\tau_i$. This connects the path-loss threshold (which defines the coverage region) to the data volume, bandwidth, and SINR through the achievable rate, while preserving the fixed-$\tau_i$ structure of the problem.
 
-	The simulation setup is updated accordingly: $B=1$ MHz, $\gamma_i$ sampled per GN from $[12,18]$ (default $15$), and $D_i$ averaged $88$ Mbit with range $[72,100]$ Mbit, so that $\tau_i=D_i/\bar{R}_i\approx22$ s on average (matching the original configuration).
+	The simulation setup is updated accordingly: $B=1$ MHz, $\Gamma_i$ sampled per GN from $[12,18]$ (default $15$), and $D_i$ averaged $88$ Mbit with range $[72,100]$ Mbit, so that $\tau_i=D_i/\bar{R}_i\approx22$ s on average (matching the original configuration).
 
 	The revised text in the manuscript is as follows.
 	\begin{changes}
-		\textbf{Section~3.1 (added).} To model the data upload, we characterize each $GN_i$ by a nominal SINR $\gamma_i$, which is a per-node design parameter given in advance---like the path-loss threshold $PL_i^{max}$---rather than the instantaneous, position-dependent SINR experienced by the UAV. Letting $B$ denote the channel bandwidth, the achievable rate of the link is evaluated at this nominal SINR through the Shannon capacity:
+		\textbf{Section~3.1 (added).} To model the data upload, we characterize each $GN_i$ by a nominal SINR $\Gamma_i$, a per-node parameter analogous to the path-loss threshold $PL_i^{max}$. Letting $B$ denote the channel bandwidth, the achievable rate of the link is evaluated at this nominal SINR through the Shannon capacity:
 		\begin{equation*}
-			\bar{R}_i = B\log_2(1+\gamma_i).
+			\bar{R}_i = B\log_2(1+\Gamma_i).
 		\end{equation*}
 		Each $GN_i$ therefore uploads data at the constant rate $\bar{R}_i$ throughout the collection phase, which yields the deterministic collection duration $\tau_i = D_i/\bar{R}_i$.
 
 		\textbf{Section~3.3 (revised Definition).} Given ordered ground nodes $GN_1,\ldots,GN_N$, their communication regions, and the data volume $D_i$ of each $GN_i$, the \textit{JHVSO} problem seeks a trajectory $q(t)=(d(t),h(t))$ and collection intervals that minimize the total flight energy. Under the constant achievable rate $\bar{R}_i$, collecting the data volume $D_i$ requires a duration $\tau_i=D_i/\bar{R}_i$; the collection of $GN_i$ is successful if and only if the UAV stays within its communication region for a total duration of at least $\tau_i$.
 
-		\textbf{Table~1 (revised).} The row ``Average $\tau$ (s) 22 [18 25]'' is replaced by ``Average $D_i$ (Mbit) 88 [72 100]'', and a new row ``Nominal SINR $\gamma_i$ 15 [12 18]'' is added.
+		\textbf{Table~1 (revised).} The row ``Average $\tau$ (s) 22 [18 25]'' is replaced by ``Average $D_i$ (Mbit) 88 [72 100]'', and a new row ``Nominal SINR $\Gamma_i$ 15 [12 18]'' is added.
 
-		\textbf{Section~6 (added).} The data upload adopts a channel bandwidth of $B=1$ MHz and a per-GN nominal SINR $\gamma_i$ sampled from $[12,18]$ (default $15$), which yields a constant achievable rate $\bar{R}_i=B\log_2(1+\gamma_i)$, about $4$ Mbps at the default; the required collection duration is then $\tau_i=D_i/\bar{R}_i$, approximately $22$ s on average under the default data volume $D_i=88$ Mbit.
+		\textbf{Section~6 (added).} The data upload adopts a channel bandwidth of $B=1$ MHz and a per-GN nominal SINR $\Gamma_i$ sampled from $[12,18]$ (default $15$), which yields a constant achievable rate $\bar{R}_i=B\log_2(1+\Gamma_i)$, about $4$ Mbps at the default; the required collection duration is then $\tau_i=D_i/\bar{R}_i$, approximately $22$ s on average under the default data volume $D_i=88$ Mbit.
 
-		\textbf{Figure~2 (revised caption).} The UAV must remain within the region of $GN_i$ for the required data collection duration $\tau_i=D_i/\bar{R}_i$, where $D_i$ is the data volume of $GN_i$ and $\bar{R}_i=B\log_2(1+\gamma_i)$ is the constant achievable rate.
+		\textbf{Figure~2 (revised caption).} The UAV must remain within the region of $GN_i$ for the required data collection duration $\tau_i=D_i/\bar{R}_i$, where $D_i$ is the data volume of $GN_i$ and $\bar{R}_i=B\log_2(1+\Gamma_i)$ is the constant achievable rate.
 	\end{changes}
 \end{revresponse}
 
